@@ -1,0 +1,13 @@
+.config/i3
+.config/i3blocks
+.scripts/
+.bash_aliases
+.bash_profile
+.bashrc
+.inputrc
+.tmux.conf
+.vimrc
+.Xdefaults
+.xinitrc
+.Xresources
+.yarnrc
