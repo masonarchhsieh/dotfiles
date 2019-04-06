@@ -1,5 +1,5 @@
 set t_Co=256
-colo ron
+colo molokai
 syntax on
 
 "set relativenumber
@@ -20,7 +20,6 @@ set showmode
 set mouse=a
 set tabstop=4
 set linebreak
-"set rtp+=/home/masonhsieh/.vim/bundle/nerdtree/
 set rtp+=/usr/lib/python3.7/site-packages/powerline/bindings/vim/
 set laststatus=2
 
@@ -28,10 +27,9 @@ filetype plugin on
 filetype indent on
 autocmd vimenter * NERDTree
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
+autocmd VimEnter * if (argc() == 0 && !exists("s:std_in")) | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd VimEnter * if (argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")) | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -78,21 +76,18 @@ hi filepath cterm=none ctermbg=238 ctermfg=40
 hi filetype cterm=none ctermbg=238 ctermfg=45
 hi filesize cterm=none ctermbg=238 ctermfg=225
 hi position cterm=none ctermbg=238 ctermfg=228
-function IsBinary()
-    
+function IsBinary()    
     if (&binary == 0)
-             return ""
+        return ""
     else
-             return "[Binary]"
+        return "[Binary]"
     endif
-
 endfunction
  
 function FileSize()
     let bytes = getfsize(expand("%:p"))
     if bytes <= 0
-        return "[Empty]"
-
+        return "[Empty]"\
     endif
 
     if bytes < 1024
@@ -102,17 +97,15 @@ function FileSize()
     else
         return "[" . (bytes / 1048576) . "MB]"
     endif
-
 endfunction
 
 " ************* Airline configuration *************
 "
- let g:airline_powerline_fonts = 1
- " symbols
- if !exists('g:airline_symbols')
-   let g:airline_symbols = {}
-   endif
-
+let g:airline_powerline_fonts = 1
+" symbols
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 
 " YCM settings {{{
 let g:clang_library_path = "/usr/lib64/"
@@ -122,23 +115,17 @@ let g:clang_snippets = 1
 let g:clang_snippets_engine = "ultisnips"
 let g:clang_close_preview = 1
 let g:clang_complete_macros = 1
-
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_use_ultisnips_completer = 1
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
-
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-
 " airline
-
-
 
 python from powerline.vim import setup as powerline_setup
 python powerline_setup()
 python del powerline_setup
-
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
@@ -158,4 +145,19 @@ endfunction
    call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
    call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
    call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+
+let g:SimpylFold_docstring_preview=1
 
