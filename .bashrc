@@ -12,12 +12,12 @@ PATH="~/bin:$PATH"
 export PYTHONPATH=/usr/lib/python3.7/site-packages
 export TERM="screen-256color"
 export GPG_TTY=$(tty)
+#For arduino IDE
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/
 #start tmux
 #[[ $TERM != "screen" ]] &&  tmux 2>/dev/null 
 # If not running interactively, do not do anything
 [[ $- != *i* ]] && return
-#[[ -z "$TMUX" ]] && exec tmux
-
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
@@ -54,7 +54,7 @@ force_color_prompt=yes
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+    source ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -80,7 +80,6 @@ banner "Hello!!" | lolcat
 date | lolcat
 cal | lolcat
 fortune -o | cowsay	| lolcat
-
 neofetch
 
 # for tmux

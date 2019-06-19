@@ -1,23 +1,3 @@
-#!/bin/bash - 
-#===============================================================================
-#
-#          FILE: update_script.sh
-# 
-#         USAGE: ./update_script.sh 
-# 
-#   DESCRIPTION: 
-# 
-#       OPTIONS: ---
-#  REQUIREMENTS: ---
-#          BUGS: ---
-#         NOTES: ---
-#        AUTHOR: YOUR NAME (), 
-#  ORGANIZATION: 
-#       CREATED: 01/21/2019 09:07:55 PM
-#      REVISION:  ---
-#===============================================================================
-
-
 FILES="list.txt"
 
 cat "$FILES" |
@@ -27,7 +7,7 @@ cat "$FILES" |
 
         if [ -d "$f" ] 2>&1;
         then
-            cp -rf "$f" ./
+            cp -rf "$f" ./$line
         elif [ -f "$f" ] 2>&1;
         then
             cp -f "$f" ./

@@ -25,10 +25,6 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 export PYTHONPATH=/usr/lib/python3.7/site-packages                 
 export TERM="screen-256color"                                      
-export TERMINAL="urxvt" i
-#alias urxvt="urxvt -fn 'xft:DejaVu Sans Mono for Powerline-12'" 
-export PYTHONPATH=/usr/lib/python3.7/site-packages
-export TERM="screen-256color"
 export TERMINAL="urxvt"
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'

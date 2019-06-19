@@ -118,19 +118,15 @@ URxvt*transparent: true
 !# shading - 0 to 99 darkens, 101 to 200 lightens.#
 !#   Dont use with tintColor; just use a darker or lighter color instead.#
 URxvt*shading: 20
-
 URxvt*saveLines: 12000
-
 URxvt*foreground: #9baea1
 URxvt*background: #1d1f21
 
 !# Monaco Linux font#
-!font pango:DejaVu Sans Mono Nerd Font 12
-!xft:DejaVu Sans Mono for Powerline-12
 !font pango:DejaVu Sans Mono Nerd Font 10
-URxvt*font: xft:Inconsolata Nerd Font Mono:size=15, xft:DejaVu Sans:size=15
+URxvt*font: xft:Inconsolata Nerd Font Mono:size=12, xft:DejaVu Sans:size=12
 !:pixelsize=14  for\ Powerline:pixelsize=14
-URxvt*boldFont: xft:Inconsolata Nerd Font Mono:bold:size=15, xft:DejaVu Sans:size=15
+URxvt*boldFont: xft:Inconsolata Nerd Font Mono:bold:size=12, xft:DejaVu Sans:size=12
 !xft:DejaVu Sans Mono:bold:pixelsize=14 for\ Powerline:pixelsize=14
 URxvt*letterSpace: -1
 
@@ -150,7 +146,7 @@ URxvt.keysym.C-S-Up:   font-size:incglobal
 URxvt.keysym.C-S-Down: font-size:decglobal
 URxvt.keysym.C-equal:  font-size:reset
 URxvt.keysym.C-slash:  font-size:show
-URxvt.font-size.step: 4
+URxvt.font-size.step: 2
 
 !# Resize fonts #
 urxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
