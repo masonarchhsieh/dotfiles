@@ -7,7 +7,7 @@ cat "$FILES" |
 
         if [ -d "$f" ] 2>&1;
         then
-            cp -rf "$f" ./$line
+            cp -rf "$f" ./"$line"
         elif [ -f "$f" ] 2>&1;
         then
             cp -f "$f" ./
