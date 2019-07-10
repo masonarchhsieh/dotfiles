@@ -90,7 +90,7 @@ bindsym $mod+Shift+BackSpace exec --no-startup-id prompt "Reboot computer?" "$re
 bindsym $mod+grave exec --no-startup-id dmenuunicode
 
 #Launch Polybar where appropriate:
-exec_always --no-startup-id polybar-launch
+# exec_always --no-startup-id polybar-launch
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -243,7 +243,7 @@ bar {
     strip_workspace_numbers no
     strip_workspace_name no
 
-    status_command bumblebee-status -m xrandr nic weather brightness disk pasink pasource time -t iceberg-rainbow
+    status_command bumblebee-status -m xrandr nic weather brightness disk spotify pasink pasource datetime -t iceberg-rainbow
     colors {
         background #000000
         statusline #ffffff
@@ -266,7 +266,7 @@ bar {
     strip_workspace_numbers no
     strip_workspace_name no
 
-    status_command bumblebee-status -m xrandr datetime -t iceberg-rainbow
+    status_command bumblebee-status -m xrandr spotify -t iceberg-rainbow
     colors {
         background #000000
         statusline #ffffff
@@ -420,20 +420,20 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
+# Declare here the shortcut to bring the display selection menu
+bindsym $mod+z mode "$mode_display"
 ## Manual management of external displays
 ## Set the shortcuts and what they do
-set $mode_display Ext Screen (v) VGA ON, (h) HDMI ON, (x) VGA OFF, (y) HDMI OFF
+set $mode_display Ext Screen (1) HDMI+eDP1, (2) Home, (3) Laptop
 mode "$mode_display" {
     bindsym 1 exec --no-startup-id xrandr --output HDMI --auto --right-of eDP1, mode "default"
-    bindsym 2 exec --no-startup-id xrandr --output HDMI1 --auto --right-of HDMI2, mode "default"
-    bindsym 3 exec --no-startup-id xrandr --output eDP1 --auto, mode "default"
+    bindsym 2 exec --no-startup-id ~/.screenlayout/home-display.sh, mode "default"
+    bindsym 3 exec --no-startup-id ~/.screenlayout/standalone-display.sh, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-# Declare here the shortcut to bring the display selection menu
-bindsym $mod+z mode "$mode_display"
 
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
