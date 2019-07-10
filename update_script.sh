@@ -14,3 +14,7 @@ cat "$FILES" |
         fi
 
     done
+
+    
+    git commit -m"update my dotfile: `(date)`"
+    git push
