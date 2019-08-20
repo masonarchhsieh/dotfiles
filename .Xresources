@@ -125,17 +125,13 @@ URxvt*background: #1d1f21
 !# Monaco Linux font#
 !font pango:DejaVu Sans Mono Nerd Font 10
 URxvt*font: xft:Inconsolata Nerd Font Mono:size=12, xft:DejaVu Sans:size=12
-!:pixelsize=14  for\ Powerline:pixelsize=14
 URxvt*boldFont: xft:Inconsolata Nerd Font Mono:bold:size=12, xft:DejaVu Sans:size=12
-!xft:DejaVu Sans Mono:bold:pixelsize=14 for\ Powerline:pixelsize=14
 URxvt*letterSpace: -1
 
 !# scrollbar - true (default) or false
 URxvt*scrollBar: true
-
 !# scrollbar position - left=false (default) or right=true
 URxvt*scrollBar_right: false
-
 !# scrollbar style - rxvt (default), plain, next, or xterm #
 URxvt*scrollstyle: plain
 

@@ -221,16 +221,12 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 # move workspace to output left|right|down|up|current|primary|<output>
 bindsym $mod+Control+Right move workspace to output right
 bindsym $mod+Control+Left move workspace to output left
-# use mod+Control to switch to monitor's profile
-# 1: setup, only eDP1(primary monitor)
-#bindsym Control+Alt+1 exec -no-startup-id xrandr -output eDP1
-# 2: home setup(HDMI2"2560x1080" - HDMI1"1920x1080")
-#bindsym Control+Alt+2 exec -no-startup-id xrandr -output HDMI2 left-of-HDMI1 -auto
+
+
 client.focused #6c71c4 #6c71c4 #fdf6e3 #6c71c4
 client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
 client.unfocused #073642 #073642 #93a1a1 #586e75
 client.urgent #d33682 #d33682 #fdf6e3 #dc322f
-
 # big monitor on HDMI2: 2560x1080
 bar {
     output HDMI2
@@ -367,9 +363,9 @@ bindsym $mod+Shift+greater execexec --no-startup-id lmc next
 # start customized dmenu for launching any program
 set $execute exec rofi -show run -eh 2 -padding 400 -fullscreen
 # list open windows to switch to
-bindsym $mod+Tab exec --no-startup-id "rofi -show window -theme Arc-Dark -font\\"DejaVu Sans Mono Nerd Font 10\\"
+bindsym $mod+Tab exec --no-startup-id "rofi -show window -theme Arc-Dark -font\\"Inconsolata Nerd Font Mono 10\\"
 # #---Function Buttons---# #
-bindsym $mod+F1 exec --no-startup-id "rofi -show drun -theme Arc-Dark -font \\"DejaVu Sans Mono Nerd Font 10\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
+bindsym $mod+F1 exec --no-startup-id "rofi -show drun -theme Arc-Dark -font \\"Inconsolata Nerd Font Mono 10\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
 bindsym $mod+F2 restart
 bindsym $mod+F3 exec --no-startup-id displayselect
 bindsym $mod+F4 exec --no-startup-id prompt "Hibernate computer?" "$hibernate"

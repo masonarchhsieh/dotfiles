@@ -14,6 +14,7 @@ export TERM="screen-256color"
 export GPG_TTY=$(tty)
 #For arduino IDE
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/
+export TERM=rxvt-unicode-256color
 #start tmux
 #[[ $TERM != "screen" ]] &&  tmux 2>/dev/null 
 # If not running interactively, do not do anything
