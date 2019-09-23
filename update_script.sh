@@ -7,14 +7,16 @@ cat "$FILES" |
 
         if [ -d "$f" ] 2>&1;
         then
-            cp -rf "$f" ./"$line"
+            echo "$f     ./$line" ;
+            #cp -rf "$f" ./"$line"
         elif [ -f "$f" ] 2>&1;
         then
-            cp -f "$f" ./
+            echo "$f     ./";
+            #cp -f "$f" ./
         fi
 
     done
 
     
-    git commit -m"update my dotfile: `(date)`"
-    git push
+#    git commit -m"update my dotfile: `(date)`"
+#    git push
