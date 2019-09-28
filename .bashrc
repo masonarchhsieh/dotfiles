@@ -6,6 +6,7 @@
 # for openCV4
 #PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig/opencv4.pc
 #export PKG_CONFIG_PATH
+# for node-opencv4
 shopt -s autocd # Allows to cd into directory merely by typing the directory name
 
 PATH="~/bin:$PATH"
@@ -22,7 +23,10 @@ export TERM=rxvt-unicode-256color
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
-. /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+#. /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
+if [ "$TERM" != "linux" ]; then
+    source ~/pureline/pureline ~/.pureline.conf
+fi
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

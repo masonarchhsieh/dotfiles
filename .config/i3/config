@@ -90,7 +90,7 @@ bindsym $mod+Shift+BackSpace exec --no-startup-id prompt "Reboot computer?" "$re
 bindsym $mod+grave exec --no-startup-id dmenuunicode
 
 #Launch Polybar where appropriate:
-exec_always --no-startup-id polybar-launch
+# exec_always --no-startup-id polybar-launch
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -221,19 +221,16 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 # move workspace to output left|right|down|up|current|primary|<output>
 bindsym $mod+Control+Right move workspace to output right
 bindsym $mod+Control+Left move workspace to output left
-# use mod+Control to switch to monitor's profile
-# 1: setup, only eDP1(primary monitor)
-#bindsym Control+Alt+1 exec -no-startup-id xrandr -output eDP1
-# 2: home setup(HDMI2"2560x1080" - HDMI1"1920x1080")
-#bindsym Control+Alt+2 exec -no-startup-id xrandr -output HDMI2 left-of-HDMI1 -auto
+
+
 client.focused #6c71c4 #6c71c4 #fdf6e3 #6c71c4
 client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
 client.unfocused #073642 #073642 #93a1a1 #586e75
 client.urgent #d33682 #d33682 #fdf6e3 #dc322f
-
 # big monitor on HDMI2: 2560x1080
 bar {
     output HDMI2
+    output HDMI1
     binding_mode_indicator yes
     font pango:DejaVu Sans Mono Nerd Font 10
     position top
@@ -243,7 +240,7 @@ bar {
     strip_workspace_numbers no
     strip_workspace_name no
 
-    status_command bumblebee-status -m xrandr nic weather brightness disk pasink pasource time -t iceberg-rainbow
+    status_command bumblebee-status -m xrandr nic weather brightness disk spotify pasink pasource datetime -t iceberg-rainbow
     colors {
         background #000000
         statusline #ffffff
@@ -254,27 +251,6 @@ bar {
 }
 
 # normal monitor on HDMI1: 1920x1080
-bar {
-    output HDMI1
-    #font pango:mono 10
-    binding_mode_indicator yes
-    font pango:DejaVu Sans Mono Nerd Font 10
-    position top
-    tray_output none
-    separator_symbol ":|:"
-    workspace_buttons yes
-    strip_workspace_numbers no
-    strip_workspace_name no
-
-    status_command bumblebee-status -m xrandr datetime -t iceberg-rainbow
-    colors {
-        background #000000
-        statusline #ffffff
-        focused_workspace #454545 #225577 #ffff00
-        inactive_workspace #454545 #212121 #5F676A
-    }
-}
-
 # only on eDP1
 bar {
     output eDP1
@@ -300,13 +276,14 @@ bar {
 # status bar
 bar {
     output HDMI2
+    output HDMI1
     font pango:DejaVu Sans Mono Nerd Font 9
     position bottom
     workspace_buttons no
 #strip_workspace_numbers yes
 #strip_workspace_name yes
 
-    status_command bumblebee-status -m cpu load memory sensors nic traffic indicator layout-xkb bluetooth battery -t iceberg
+    status_command bumblebee-status -m cpu load memory sensors nic traffic indicator layout-xkb bluetooth battery -p location='melbourne' -t iceberg
 #status_command i3status
     colors {
         background #000000
@@ -330,20 +307,20 @@ bar {
     }
 }
 # status bar
-bar {
-    output HDMI1
-    font pango:DejaVu Sans Mono Nerd Font 9
-    position bottom
-    workspace_buttons no
-#strip_workspace_numbers yes
-#strip_workspace_name yes
-
-    status_command i3blocks
-    colors {
-        background #000000
-        statusline #ffffff
-    }
-}
+# bar {
+#     output HDMI1
+#     font pango:DejaVu Sans Mono Nerd Font 9
+#     position bottom
+#     workspace_buttons no
+# #strip_workspace_numbers yes
+# #strip_workspace_name yes
+# 
+#     status_command i3blocks
+#     colors {
+#         background #000000
+#         statusline #ffffff
+#     }
+# }
 
 
 # tray output
@@ -367,9 +344,9 @@ bindsym $mod+Shift+greater execexec --no-startup-id lmc next
 # start customized dmenu for launching any program
 set $execute exec rofi -show run -eh 2 -padding 400 -fullscreen
 # list open windows to switch to
-bindsym $mod+Tab exec --no-startup-id "rofi -show window -theme Arc-Dark -font\\"DejaVu Sans Mono Nerd Font 10\\"
+bindsym $mod+Tab exec --no-startup-id "rofi -show window -theme Arc-Dark -font\\"Inconsolata Nerd Font Mono 10\\"
 # #---Function Buttons---# #
-bindsym $mod+F1 exec --no-startup-id "rofi -show drun -theme Arc-Dark -font \\"DejaVu Sans Mono Nerd Font 10\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
+bindsym $mod+F1 exec --no-startup-id "rofi -show drun -theme Arc-Dark -font \\"Inconsolata Nerd Font Mono 10\\" -run-shell-command '{terminal} -e \\" {cmd}; read -n 1 -s\\"'"
 bindsym $mod+F2 restart
 bindsym $mod+F3 exec --no-startup-id displayselect
 bindsym $mod+F4 exec --no-startup-id prompt "Hibernate computer?" "$hibernate"
@@ -420,20 +397,21 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 
+# Declare here the shortcut to bring the display selection menu
+bindsym $mod+z mode "$mode_display"
 ## Manual management of external displays
 ## Set the shortcuts and what they do
-set $mode_display Ext Screen (v) VGA ON, (h) HDMI ON, (x) VGA OFF, (y) HDMI OFF
+set $mode_display Ext Screen (1) HDMI+eDP1, (2) Home, (3) Laptop, (4) Presentation
 mode "$mode_display" {
     bindsym 1 exec --no-startup-id xrandr --output HDMI --auto --right-of eDP1, mode "default"
-    bindsym 2 exec --no-startup-id xrandr --output HDMI1 --auto --right-of HDMI2, mode "default"
-    bindsym 3 exec --no-startup-id xrandr --output eDP1 --auto, mode "default"
+    bindsym 2 exec --no-startup-id ~/.screenlayout/home-display.sh, mode "default"
+    bindsym 3 exec --no-startup-id ~/.screenlayout/standalone-display.sh, mode "default"
+    bindsym 4 exec --no-startup-id ~/.screenlayout/edp+HDMI1.sh, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-# Declare here the shortcut to bring the display selection menu
-bindsym $mod+z mode "$mode_display"
 
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness

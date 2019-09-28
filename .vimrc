@@ -47,6 +47,11 @@ endif
 set fileencodings=utf-8,utf-16,big5,gb2312,gbk,gb18030,euc-jp,euc-kr,latinl
 
 
+" Switch to different tabs
+" Command to move among tabs in Konsole-style
+map <A-Right> gt
+map <A-Left> gT
+
 map <F6> :setlocal spell! spelllang=en_us<CR>
 map <F10> :Goyo<CR>
 map <C-t> :call TabToSpaces()<CR>
