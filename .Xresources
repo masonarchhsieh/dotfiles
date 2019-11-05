@@ -44,7 +44,7 @@ Xft.hintstyle:              hintslight
 ! Color4: medium blue: FIXME: unused?
 ! Color12: light blue: directory
 #define _color4 #5f819d
-#define _color12 #81a2be
+#define _color12 #8ec2ed
 
 ! Color5: dark purple: Not used in ls, in ranger (not sure where it gets it colors from though)
 ! Color13: light purple: socket file /var/run/dbus_system_bus_socket
@@ -126,7 +126,10 @@ URxvt*background: #1d1f21
 !font pango:DejaVu Sans Mono Nerd Font 10
 URxvt*font: xft:Inconsolata Nerd Font Mono:size=12, xft:DejaVu Sans:size=12
 URxvt*boldFont: xft:Inconsolata Nerd Font Mono:bold:size=12, xft:DejaVu Sans:size=12
-URxvt*letterSpace: -1
+URxvt*letterSpace: 0 
+
+! For showing the curl wttr: weather icon & fonts
+xft:symbola:size=10:minspace=False
 
 !# scrollbar - true (default) or false
 URxvt*scrollBar: true

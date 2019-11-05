@@ -24,7 +24,6 @@ sudo -n loadkeys ~/.scripts/ttymaps.kmap 2>/dev/null
  export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
  
  export PYTHONPATH=/usr/lib/python3.7/site-packages                 
- export TERM="screen-256color"                                      
  export TERMINAL="urxvt"
  export LESS_TERMCAP_mb=$'\e[1;32m'
  export LESS_TERMCAP_md=$'\e[1;32m'
@@ -33,5 +32,4 @@ sudo -n loadkeys ~/.scripts/ttymaps.kmap 2>/dev/null
  export LESS_TERMCAP_so=$'\e[1;33m'
  export LESS_TERMCAP_ue=$'\e[0m'
  export LESS_TERMCAP_us=$'\e[1;4;31m'
-
 

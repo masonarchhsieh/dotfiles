@@ -83,7 +83,7 @@ complete -o default -F _pip_completion pip
 # Setting 
 banner "Hello!!" | lolcat
 date | lolcat
-cal | lolcat
+#curl wttr.in/Melbourne 
 fortune -o | cowsay	| lolcat
 neofetch
 
