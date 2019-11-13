@@ -6,7 +6,7 @@ while read -r line;
 do
     temp="/home/masonhsieh/$line"
     if [[ -d $temp ]]; then
-        cp -rf $temp $gitDotPath
+        cp -rft $temp $gitDotPath$line
     elif [[ -f $temp ]];
     then
         cp -avf $temp $gitDotPath
