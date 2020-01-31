@@ -20,7 +20,7 @@ set showmode
 set mouse=a
 set tabstop=4
 set linebreak
-set rtp+=/usr/lib/python3.7/site-packages/powerline/bindings/vim/
+set rtp+=/usr/lib/python3.8/site-packages/powerline/bindings/vim/
 set laststatus=2
 
 filetype plugin on
@@ -77,8 +77,6 @@ function SwitchMouseMode()
     endif                                                                       
 endfunction            
 
-" statusline
-set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
 hi filepath cterm=none ctermbg=238 ctermfg=40
 hi filetype cterm=none ctermbg=238 ctermfg=45
 hi filesize cterm=none ctermbg=238 ctermfg=225
@@ -114,6 +112,15 @@ if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
 
+" Set up airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#formatter = 'tmuxline'
+" statusline
+set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
+
+
 " YCM settings {{{
 let g:clang_library_path = "/usr/lib64/"
 let g:clang_complete_copen = 0
@@ -139,19 +146,19 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction 
 
-   call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-   call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-   call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-   call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-   call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow','#151515')
-   call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-   call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-   call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-   call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-   call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-   call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-   call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-   call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow','#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>

@@ -9,21 +9,25 @@
 # for node-opencv4
 shopt -s autocd # Allows to cd into directory merely by typing the directory name
 
-PATH="~/bin:$PATH"
-export PYTHONPATH=/usr/lib/python3.7/site-packages
+PATH="~/bin:$PATH:$HOME/.config/composer/vendor/bin"
+export PYTHONPATH=/usr/lib/python3.8/site-packages
 export TERM="screen-256color"
 export GPG_TTY=$(tty)
 #For arduino IDE
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu/gtk-2.0/modules/
 export TERM=rxvt-unicode-256color
+
+# Export cowsay setting for the ansible service:
+export ANSIBLE_NOCOWS=1 #disable cowsay on ansible
+#export ANSIBLE_COW_SELECTION=random 
+
 #start tmux
 #[[ $TERM != "screen" ]] &&  tmux 2>/dev/null 
 # If not running interactively, do not do anything
-[[ $- != *i* ]] && return
+## [[ $- != *i* ]] && return
 powerline-daemon -q
 POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
-#. /usr/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 if [ "$TERM" != "linux" ]; then
     source ~/pureline/pureline ~/.pureline.conf
 fi

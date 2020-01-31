@@ -22,7 +22,7 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-export PYTHONPATH=/usr/lib/python3.7/site-packages                 
+export PYTHONPATH=/usr/lib/python3.8/site-packages                 
 export TERMINAL="urxvt"
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;32m'
