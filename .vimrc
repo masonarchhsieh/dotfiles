@@ -14,28 +14,25 @@ set shiftwidth=4
 set incsearch
 set cindent
 set smarttab
-set backspace=indent,eol,start
 set showcmd
 set showmode
 set mouse=a
 set tabstop=4
 set linebreak
-set rtp+=/usr/lib/python3.8/site-packages/powerline/bindings/vim/
+set rtp+=/usr/lib/python3.9/site-packages/powerline/bindings/vim/
 set laststatus=2
 
 filetype plugin on
 filetype indent on
+"Nerd Tree
 autocmd vimenter * NERDTree
-autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if (argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")) | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
 map <C-n> :NERDTreeToggle<CR>
-
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let g:powerline_pycmd="py3"
+"let g:powerline_pycmd="py3"
 
 if has("multi_byte")
 else
@@ -43,11 +40,6 @@ else
 endif
 
 set fileencodings=utf-8,utf-16,big5,gb2312,gbk,gb18030,euc-jp,euc-kr,latinl
-
-" Set auto-complete for HTML files
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-set omnifunc=syntaxcomplete#Complete
-
 
 " Switch to different tabs
 " Command to move among tabs in Konsole-style
@@ -113,22 +105,46 @@ if !exists('g:airline_symbols')
 endif
 
 " Set up airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-" let g:airline#extensions#tabline#formatter = 'tmuxline'
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#formatter = 'default'
 " statusline
-set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
+"set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
 
 
 " YCM settings {{{
+"Plugin Configs" {{{
+" Clang Complete
 let g:clang_library_path = "/usr/lib64/"
-let g:clang_complete_copen = 0
 let g:clang_hl_errors = 1
-let g:clang_snippets = 1
 let g:clang_snippets_engine = "ultisnips"
 let g:clang_close_preview = 1
-let g:clang_complete_macros = 1
+let g:clang_user_options = '-std=c++0x -stdlib=libc++ -fblocks -fexceptions -I/usr/local/include'
+let g:clang_use_library=1
+let g:clang_complete_copen=1
+let g:clang_periodic_quickfix=1
+let g:clang_snippets=1
+let g:clang_complete_macros=1
+let g:clang_complete_patterns=1
+
+" Omni Complete
+set ofu=syntaxcomplete#Complete
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType go set omnifunc=gocomplete#Complete
+autocmd FileType golang set omnifunc=gocomplete#Complete
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
+autocmd FileType java set omnifunc=javacomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType ruby set omnifunc=rubycomplete#Complete
+autocmd FileType sql set omnifunc=sqlcomplete#Complete
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+
+
+
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_use_ultisnips_completer = 1
@@ -174,4 +190,3 @@ set foldlevel=99
 nnoremap <space> za
 
 let g:SimpylFold_docstring_preview=1
-

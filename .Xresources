@@ -120,7 +120,7 @@ URxvt*transparent: false
 URxvt*shading: 20
 URxvt*saveLines: 12000
 URxvt*foreground: #9baea1
-URxvt*background: #1d1f21
+URxvt*background: #3c3f42 
 
 !# Monaco Linux font#
 !font pango:DejaVu Sans Mono Nerd Font 10
@@ -149,3 +149,4 @@ URxvt.font-size.step: 2
 
 !# Resize fonts #
 urxvt.perl-ext-common: default,tabbed,matcher,resize-font,-tabbed
+rofi.theme:    Arc-Dark
