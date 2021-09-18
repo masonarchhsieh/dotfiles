@@ -1,8 +1,52 @@
-set t_Co=256
-colo molokai
+" for Vundle
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=/home/users3/masonarc/.vim/bundle/vundle/
+
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'majutsushi/tagbar'
+Plugin 'Yggdroot/indentLine' 
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+" filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
+"""" Vim Appearance
+
+" put colorscheme files in ~/.vim/colors/
+" colorscheme slate      " good colorschemes: murphy, slate, molokai, badwolf, solarized
+colorscheme evening 
 syntax on
 
-"set relativenumber
+set relativenumber
 set number
 set ruler
 set autowrite
@@ -10,156 +54,78 @@ set showmode
 set wrap
 set smartcase
 set expandtab
-set shiftwidth=4
 set incsearch
 set cindent
 set smarttab
 set showcmd
 set showmode
 set mouse=a
-set tabstop=4
 set linebreak
-set rtp+=/usr/lib/python3.9/site-packages/powerline/bindings/vim/
+set encoding=utf-8
+set showmatch
 set laststatus=2
+set incsearch           " search as characters are entered
+set hlsearch
 
-filetype plugin on
-filetype indent on
-"Nerd Tree
-autocmd vimenter * NERDTree
-autocmd VimEnter * if (argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")) | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-"let g:powerline_pycmd="py3"
-
-if has("multi_byte")
-else
-	echoerr "If +multi_byte is not included, you should compile Vim with big features."
-endif
-
-set fileencodings=utf-8,utf-16,big5,gb2312,gbk,gb18030,euc-jp,euc-kr,latinl
-
-" Switch to different tabs
-" Command to move among tabs in Konsole-style
 map <A-Right> gt
 map <A-Left> gT
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-map <F6> :setlocal spell! spelllang=en_us<CR>
-map <F10> :Goyo<CR>
-map <C-t> :call TabToSpaces()<CR>
-map! <C-t> <Esc>:call TabToSpaces()<CR>
-function TabToSpaces()
-	retab
-	echo "Convert tab to spaces."
-endfunction
+" Enable folding with the spacebar
+set foldmethod=indent
+set foldlevel=99
 
-" shortcut                                                                      
-" Toggle mouse                                                                  
-"map <C-n> :call SwitchMouseMode()<CR>                                           
-"map! <C-n> <Esc>:call SwitchMouseMode()<CR>                                     
-function SwitchMouseMode()                                                      
-    if (&mouse == "a")                                                          
-            let &mouse = ""                                                         
-        echo "Mouse is disabled."                                               
-    else                                                                        
-        let &mouse = "a"                                                        
-        echo "Mouse is enabled."                                                
-    endif                                                                       
-endfunction            
+map <space> za
 
-hi filepath cterm=none ctermbg=238 ctermfg=40
-hi filetype cterm=none ctermbg=238 ctermfg=45
-hi filesize cterm=none ctermbg=238 ctermfg=225
-hi position cterm=none ctermbg=238 ctermfg=228
-function IsBinary()    
-    if (&binary == 0)
-        return ""
-    else
-        return "[Binary]"
-    endif
-endfunction
- 
-function FileSize()
-    let bytes = getfsize(expand("%:p"))
-    if bytes <= 0
-        return "[Empty]"\
-    endif
+"""" Tab settings
 
-    if bytes < 1024
-        return "[" . bytes . "B]"
-    elseif bytes < 1048576
-        return "[" . (bytes / 1024) . "KB]"
-    else
-        return "[" . (bytes / 1048576) . "MB]"
-    endif
-endfunction
+set expandtab           " convert <TAB> key-presses to spaces
+set shiftwidth=4        " number of spaces to use for each step of (auto)indent
+set softtabstop=4       " backspace after pressing <TAB> will remove up to this many spaces
+set autoindent          " copy indent from current line when starting a new line
+set smartindent         " even better autoindent (e.g. add indent after '{')
+set tabstop=4
 
-" ************* Airline configuration *************
-"
-let g:airline_powerline_fonts = 1
-" symbols
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" Set up airline
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_sep = ' '
-"let g:airline#extensions#tabline#left_alt_sep = '|'
-" let g:airline#extensions#tabline#formatter = 'default'
-" statusline
-"set statusline=%#filepath#[%{expand('%:p')}]%#filetype#[%{strlen(&fenc)?&fenc:&enc},\ %{&ff},\ %{strlen(&filetype)?&filetype:'plain'}]%#filesize#%{FileSize()}%{IsBinary()}%=%#position#%c,%l/%L\ [%3p%%]
+" use filetype-based syntax highlighting, ftplugins, and indentation
+syntax enable
+filetype plugin indent on
 
 
+" YouCompleteMe
 " YCM settings {{{
-"Plugin Configs" {{{
 " Clang Complete
-let g:clang_library_path = "/usr/lib64/"
-let g:clang_hl_errors = 1
-let g:clang_snippets_engine = "ultisnips"
-let g:clang_close_preview = 1
-let g:clang_user_options = '-std=c++0x -stdlib=libc++ -fblocks -fexceptions -I/usr/local/include'
-let g:clang_use_library=1
-let g:clang_complete_copen=1
-let g:clang_periodic_quickfix=1
-let g:clang_snippets=1
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=1
-
-" Omni Complete
-set ofu=syntaxcomplete#Complete
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType go set omnifunc=gocomplete#Complete
-autocmd FileType golang set omnifunc=gocomplete#Complete
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType java set completefunc=javacomplete#CompleteParamsInfo
-autocmd FileType java set omnifunc=javacomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType ruby set omnifunc=rubycomplete#Complete
-autocmd FileType sql set omnifunc=sqlcomplete#Complete
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-
-
-
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_use_ultisnips_completer = 1
 let g:ycm_key_list_select_completion=[]
 let g:ycm_key_list_previous_completion=[]
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-" airline
+nmap <leader>D <plug>(YCMHover)
 
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+" tagbar
+"let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30
+" set tagbar on the left
+" let g:tagbar_left=1
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+"NerdTree
+"autocmd vimenter * NERDTree
+map <F3> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
 function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction 
 
 call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
@@ -176,17 +142,34 @@ call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
+" airline
+let g:airline_theme='molokai'
+highlight Pmenu ctermbg=gray guibg=Grey
+hi Visual term=reverse cterm=reverse guibg=Grey
+map <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
-" Enable folding with the spacebar
-nnoremap <space> za
-
-let g:SimpylFold_docstring_preview=1
+" vim-gitgutter
+set updatetime=100
+"let g:gitgutter_max_signs = 500  " default value (Vim < 8.1.0614, Neovim < 0.4.0)
+"nmap ]h <Plug>(GitGutterNextHunk)
+"nmap [h <Plug>(GitGutterPrevHunk)
+""let g:gitgutter_show_msg_on_hunk_jumping = 0
+""command! Gqf GitGutterQuickFix | copen
+"nmap ghs <Plug>(GitGutterStageHunk)
+"nmap ghu <Plug>(GitGutterUndoHunk)
+"nmap ghp <Plug>(GitGutterPreviewHunk)
+"omap ih <Plug>(GitGutterTextObjectInnerPending)
+"omap ah <Plug>(GitGutterTextObjectOuterPending)
+"xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+"xmap ah <Plug>(GitGutterTextObjectOuterVisual)
+" to customize the symbols
+let g:gitgutter_sign_added = 'xx'
+let g:gitgutter_sign_modified = 'yy'
+let g:gitgutter_sign_removed = 'zz'
+let g:gitgutter_sign_removed_first_line = '^^'
+let g:gitgutter_sign_removed_above_and_below = '{'
+let g:gitgutter_sign_modified_removed = 'ww'
+highlight GitGutterAdd    ctermfg=blue
+highlight GitGutterChange ctermfg=green
+highlight GitGutterDelete ctermfg=red
