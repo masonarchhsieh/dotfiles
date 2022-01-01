@@ -1,0 +1,289 @@
+" for Vundle
+set nocompatible              " be iMproved, required
+filetype on                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=/home/users3/masonarc/.vim/bundle/Vundle.vim/
+
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'rip-rip/clang_complete'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'zxqfl/tabnine-vim'
+Bundle 'libclang/clangd'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'majutsushi/tagbar'
+Plugin 'Yggdroot/indentLine'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'autopreview'
+Plugin 'webastien/vim-ctags'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+" filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
+"""" Vim Appearance
+
+" put colorscheme files in ~/.vim/colors/
+" colorscheme slate      " good colorschemes: murphy, slate, molokai, badwolf, solarized
+colorscheme evening
+syntax on
+
+"set relativenumber
+set number
+set ruler
+set autowrite
+set showmode
+set wrap
+set smartcase
+set expandtab
+set incsearch
+set cindent
+set smarttab
+set showcmd
+set showmode
+set mouse=a
+set linebreak
+set encoding=utf-8
+set showmatch
+set laststatus=2
+set incsearch           " search as characters are entered
+set hlsearch
+set keywordprg=cppman
+
+map <A-Right> gt
+map <A-Left> gT
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Enable folding with the spacebar
+set foldmethod=indent
+set foldlevel=99
+
+map <space> za
+
+"""" Tab settings
+
+set expandtab           " convert <TAB> key-presses to spaces
+set shiftwidth=4        " number of spaces to use for each step of (auto)indent
+set softtabstop=4       " backspace after pressing <TAB> will remove up to this many spaces
+set autoindent          " copy indent from current line when starting a new line
+set smartindent         " even better autoindent (e.g. add indent after '{')
+set tabstop=4
+
+" use filetype-based syntax highlighting, ftplugins, and indentation
+syntax enable
+filetype plugin indent on
+
+" clang-autocomplete
+let g:clang_use_library = 1
+let g:clang_library_path='/usr/lib/llvm-10/lib/'
+let g:clang_user_options = '-std=c99 -std=c11'
+
+" YouCompleteMe
+" YCM settings {{{
+" Clang Complete
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_min_num_of_chars_for_completion=3
+let g:ycm_seed_identifiers_with_syntax=1
+
+let g:ycm_confirm_extra_conf = 1
+let g:ycm_error_symbol = '>!'
+let g:ycm_warning_symbol = '>*'
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_max_num_identifier_candidates = 10
+let g:ycm_max_num_candidates = 50
+let g:ycm_auto_trigger = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_use_ultisnips_completer = 1
+" Let clangd fully control code completion
+let g:ycm_use_clangd = 1
+let g:ycm_clangd_binary_path = "/usr/bin/clangd"
+ let g:ycm_clangd_uses_ycmd_caching = 0
+ let g:ycm_disable_signature_help = 0
+" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+"let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_goto_buffer_command = 'same-buffer'
+let g:ycm_clangd_args = ['-log=verbose', '-pretty', '--header-insertion=never']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
+let g:ycm_key_list_stop_completion = ['<C-y>']
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:ycm_key_invoke_completion = '<C-Space>'
+let g:ycm_max_diagnostics_to_display = 30
+
+nmap <leader>D <plug>(YCMHover)
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"ctags
+let g:tagbar_ctags_bin='/usr/local/bin/my-custom-ctags-binary'
+let g:vim_ctags__relative = 'always'  " yes / no, and also always / never with universal-ctags
+let g:vim_ctags__totals   = 'yes'     " yes / no
+let g:vim_ctags__jump_behaviors = { 'before': 'tabnew', 'after': 'norm zvzz' }
+map      <silent> <F4> :call DisplayTag()<CR>
+map      <silent> <F5> :call DisplayGivenTag()<CR>
+nnoremap <silent> <F6> :call RebuildTags()<CR>
+
+"tagbar
+let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_width=30
+" set tagbar on the left
+" let g:tagbar_left=1
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+"NerdTree
+"autocmd vimenter * NERDTree
+map <F3> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+"function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+"    exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+"    exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+"endfunction
+"
+"call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+"call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+"call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow','#151515')
+"call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+"call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+"call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+"call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+"call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+"call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+
+" airline
+let g:airline_theme='molokai'
+highlight Pmenu ctermbg=gray guibg=Grey
+hi Visual term=reverse cterm=reverse guibg=Grey
+map <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
+" vim-gitgutter
+set updatetime=100
+"let g:gitgutter_max_signs = 500  " default value (Vim < 8.1.0614, Neovim < 0.4.0)
+"nmap ]h <Plug>(GitGutterNextHunk)
+"nmap [h <Plug>(GitGutterPrevHunk)
+""let g:gitgutter_show_msg_on_hunk_jumping = 0
+""command! Gqf GitGutterQuickFix | copen
+"nmap ghs <Plug>(GitGutterStageHunk)
+"nmap ghu <Plug>(GitGutterUndoHunk)
+"nmap ghp <Plug>(GitGutterPreviewHunk)
+"omap ih <Plug>(GitGutterTextObjectInnerPending)
+"omap ah <Plug>(GitGutterTextObjectOuterPending)
+"xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+"xmap ah <Plug>(GitGutterTextObjectOuterVisual)
+" to customize the symbols
+let g:gitgutter_sign_added = 'xx'
+let g:gitgutter_sign_modified = 'yy'
+let g:gitgutter_sign_removed = 'zz'
+let g:gitgutter_sign_removed_first_line = '^^'
+let g:gitgutter_sign_removed_above_and_below = '{'
+let g:gitgutter_sign_modified_removed = 'ww'
+highlight GitGutterAdd    ctermfg=blue
+highlight GitGutterChange ctermfg=green
+highlight GitGutterDelete ctermfg=red
+
+" ctrlp
+let g:ctrlp_map = '<leader>ff'
+let g:ctrlp_cmd = 'CtrlP'
+"show recently opened files
+map <leader>fp :CtrlPMRU<CR>
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz)$',
+    \ }
+
+"\ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+
+
+" vim-tmux navigator
+"let g:tmux_navigator_no_mappings = 1
+"nnoremap <silent> {c-h} :TmuxNavigateLeft<cr>
+"nnoremap <silent> {c-j} :TmuxNavigateDown<cr>
+"nnoremap <silent> {c-k} :TmuxNavigateUp<cr>
+"nnoremap <silent> {c-l} :TmuxNavigateRight<cr>
+"nnoremap <silent> {c->} :TmuxNavigatePrevious<cr>
+
+set completeopt=menuone,preview
+"let g:lsp_diagnostics_float_delay = 120
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    nmap <buffer> gK <plug>(lsp-hover)
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gr <plug>(lsp-rename)
+endfunction
+
+augroup lsp_install
+    au!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" python completion server
+if executable('pyls')
+    " pip3 install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'priority': 5,
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
