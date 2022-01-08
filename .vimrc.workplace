@@ -1,9 +1,10 @@
 " for Vundle
 set nocompatible              " be iMproved, required
-filetype on                  " required
+filetype off                 " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=/home/users3/masonarc/.vim/bundle/Vundle.vim/
+set rtp+=/home/users3/masonarc/.vim/bundle/YouCompleteMe/
 
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -13,14 +14,11 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'rip-rip/clang_complete'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'zxqfl/tabnine-vim'
-Bundle 'libclang/clangd'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'YouCompleteMe'
 Bundle 'majutsushi/tagbar'
 Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/nerdtree'
@@ -30,6 +28,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'autopreview'
 Plugin 'webastien/vim-ctags'
+"Plugin 'ray-x/lsp_signature.nvim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -48,8 +47,10 @@ filetype plugin indent on    " required
 """" Vim Appearance
 
 " put colorscheme files in ~/.vim/colors/
-" colorscheme slate      " good colorschemes: murphy, slate, molokai, badwolf, solarized
-colorscheme evening
+" colorscheme slate      " good colorschemes: murphy, slate, molokai, badwolf,
+" solarized, peachpuff
+colorscheme ron
+syntax enable
 syntax on
 
 "set relativenumber
@@ -74,8 +75,8 @@ set incsearch           " search as characters are entered
 set hlsearch
 set keywordprg=cppman
 
-map <A-Right> gt
-map <A-Left> gT
+nnoremap <A-Right> gt
+nnoremap <A-Left> gT
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -84,11 +85,9 @@ nnoremap <C-H> <C-W><C-H>
 " Enable folding with the spacebar
 set foldmethod=indent
 set foldlevel=99
-
 map <space> za
 
 """" Tab settings
-
 set expandtab           " convert <TAB> key-presses to spaces
 set shiftwidth=4        " number of spaces to use for each step of (auto)indent
 set softtabstop=4       " backspace after pressing <TAB> will remove up to this many spaces
@@ -96,26 +95,35 @@ set autoindent          " copy indent from current line when starting a new line
 set smartindent         " even better autoindent (e.g. add indent after '{')
 set tabstop=4
 
-" use filetype-based syntax highlighting, ftplugins, and indentation
-syntax enable
-filetype plugin indent on
-
 " clang-autocomplete
-let g:clang_use_library = 1
-let g:clang_library_path='/usr/lib/llvm-10/lib/'
-let g:clang_user_options = '-std=c99 -std=c11'
+"let g:clang_use_library = 1
+"let g:clang_library_path='/usr/lib/llvm-12/lib/libclang-12.so.1'
+"let g:clang_user_options = '-std=c99, -std=c11'
+"let g:clang_complete_auto = 1
+"let g:clang_complete_copen = 1
+"let g:clang_debug = 1
+
 
 " YouCompleteMe
 " YCM settings {{{
-" Clang Complete
-let g:ycm_server_python_interpreter='/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+" Let clangd fully control code completion
+set previewheight=30
+let g:ycm_clangd_uses_ycmd_caching = 0
+let g:ycm_use_clangd = 1
+"let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_clangd_args = ['-log=verbose', '-pretty', '--header-insertion=never']
+
+let g:ycm_python_binary_path='/usr/bin/python3'
+let g:ycm_confirm_extra_conf = 1
+"let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='/home/users3/masonarc/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
   \             're!\[.*\]\s'],
   \   'ocaml' : ['.', '#'],
   \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'cxx,hxx' : ['->', '.', '::'],
   \   'perl' : ['->'],
   \   'php' : ['->', '::'],
   \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
@@ -123,51 +131,55 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
+" Enable debugging
+let g:ycm_keep_logfiles = 1
+let g:ycm_log_level = 'debug'
+
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_min_num_of_chars_for_completion=3
 let g:ycm_seed_identifiers_with_syntax=1
-
-let g:ycm_confirm_extra_conf = 1
 let g:ycm_error_symbol = '>!'
 let g:ycm_warning_symbol = '>*'
 let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_max_num_identifier_candidates = 10
-let g:ycm_max_num_candidates = 50
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+let g:ycm_max_num_identifier_candidates = 20
+let g:ycm_max_num_candidates = 20
 let g:ycm_auto_trigger = 1
+"let g:ycm_min_num_identifier_candidate_chars = 99
 "let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_use_ultisnips_completer = 1
-" Let clangd fully control code completion
-let g:ycm_use_clangd = 1
-let g:ycm_clangd_binary_path = "/usr/bin/clangd"
- let g:ycm_clangd_uses_ycmd_caching = 0
- let g:ycm_disable_signature_help = 0
-" Use installed clangd, not YCM-bundled clangd which doesn't get updates.
-"let g:ycm_clangd_binary_path = exepath("clangd")
+let g:ycm_disable_signature_help = 0
+"let g:ycm_goto_buffer_command = 'horizontal-split'
 let g:ycm_goto_buffer_command = 'same-buffer'
-let g:ycm_clangd_args = ['-log=verbose', '-pretty', '--header-insertion=never']
+
 let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-let g:ycm_key_invoke_completion = '<C-Space>'
-let g:ycm_max_diagnostics_to_display = 30
+let g:ycm_key_invoke_completion = '<C-i>'
+let g:ycm_show_diagnostics_ui = 1
+let g:ycm_max_diagnostics_to_display = 20
 
-nmap <leader>D <plug>(YCMHover)
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>yo :YcmCompleter GoTo<CR>
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>yt :YcmCompleter GetType<CR>
+nnoremap <leader>yi :YcmCompleter GoToInclude<CR>
+nnoremap <leader>ym :YcmCompleter GoToImprecise<CR>
+nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
+nnoremap <leader>fx :YcmCompleter FixIt<CR>
+nnoremap <F9> :YcmDiags<CR>
+nnoremap <F10> :YcmForceCompileAndDiagnostics<CR>
 
 "ctags
-let g:tagbar_ctags_bin='/usr/local/bin/my-custom-ctags-binary'
 let g:vim_ctags__relative = 'always'  " yes / no, and also always / never with universal-ctags
 let g:vim_ctags__totals   = 'yes'     " yes / no
 let g:vim_ctags__jump_behaviors = { 'before': 'tabnew', 'after': 'norm zvzz' }
-map      <silent> <F4> :call DisplayTag()<CR>
-map      <silent> <F5> :call DisplayGivenTag()<CR>
+nnoremap <silent> <F4> :call DisplayTag()<CR>
+nnoremap <silent> <F5> :call DisplayGivenTag()<CR>
 nnoremap <silent> <F6> :call RebuildTags()<CR>
 
 "tagbar
-let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_ctags_bin='/usr/local/bin/ctags'
 let g:tagbar_width=30
 " set tagbar on the left
 " let g:tagbar_left=1
@@ -204,10 +216,12 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 
 " airline
-let g:airline_theme='molokai'
-highlight Pmenu ctermbg=gray guibg=Grey
+let g:airline_theme='tomorrow'
+highlight Pmenu ctermbg=cyan guibg=Grey
 hi Visual term=reverse cterm=reverse guibg=Grey
-map <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+hi Search guibg=peru guifg=wheat
+hi Search cterm=NONE ctermfg=grey ctermbg=blue
+map <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " vim-gitgutter
 set updatetime=100
@@ -261,15 +275,18 @@ let g:ctrlp_follow_symlinks=1
 "nnoremap <silent> {c-l} :TmuxNavigateRight<cr>
 "nnoremap <silent> {c->} :TmuxNavigatePrevious<cr>
 
-set completeopt=menuone,preview
-"let g:lsp_diagnostics_float_delay = 120
+
+
+set completeopt=menuone,longest
+set complete+=kspell
+let g:lsp_diagnostics_float_delay = 20
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
-    nmap <buffer> gK <plug>(lsp-hover)
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gr <plug>(lsp-rename)
+    nnoremap <buffer> lh <plug>(lsp-hover)
+    nnoremap <buffer> ld <plug>(lsp-definition)
+    nnoremap <buffer> lr <plug>(lsp-rename)
 endfunction
 
 augroup lsp_install
@@ -287,3 +304,5 @@ if executable('pyls')
         \ 'whitelist': ['python'],
         \ })
 endif
+
+autocmd FileType cpp setlocal keywordprg=cppman
