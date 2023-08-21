@@ -17,6 +17,10 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'git://git.wincent.com/command-t.git'
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'YouCompleteMe'
 Bundle 'majutsushi/tagbar'
@@ -28,6 +32,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'autopreview'
 Plugin 'webastien/vim-ctags'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
 "Plugin 'ray-x/lsp_signature.nvim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -49,7 +55,7 @@ filetype plugin indent on    " required
 " put colorscheme files in ~/.vim/colors/
 " colorscheme slate      " good colorschemes: murphy, slate, molokai, badwolf,
 " solarized, peachpuff
-colorscheme ron
+colorscheme slate
 syntax enable
 syntax on
 
@@ -74,9 +80,11 @@ set laststatus=2
 set incsearch           " search as characters are entered
 set hlsearch
 set keywordprg=cppman
+set wildmenu
+"set wildmode=list:longest,full
 
-nnoremap <A-Right> gt
-nnoremap <A-Left> gT
+"nnoremap <A-Right> gt
+"nnoremap <A-Left> gT
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -94,6 +102,7 @@ set softtabstop=4       " backspace after pressing <TAB> will remove up to this 
 set autoindent          " copy indent from current line when starting a new line
 set smartindent         " even better autoindent (e.g. add indent after '{')
 set tabstop=4
+set backspace=indent,eol,start
 
 " clang-autocomplete
 "let g:clang_use_library = 1
@@ -111,7 +120,7 @@ set previewheight=30
 let g:ycm_clangd_uses_ycmd_caching = 0
 let g:ycm_use_clangd = 1
 "let g:ycm_clangd_binary_path = exepath("clangd")
-let g:ycm_clangd_args = ['-log=verbose', '-pretty', '--header-insertion=never']
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
 
 let g:ycm_python_binary_path='/usr/bin/python3'
 let g:ycm_confirm_extra_conf = 1
@@ -132,8 +141,8 @@ let g:ycm_semantic_triggers =  {
   \   'erlang' : [':'],
   \ }
 " Enable debugging
-let g:ycm_keep_logfiles = 1
-let g:ycm_log_level = 'debug'
+" let g:ycm_keep_logfiles = 1
+" let g:ycm_log_level = 'debug'
 
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_min_num_of_chars_for_completion=3
@@ -156,17 +165,17 @@ let g:ycm_goto_buffer_command = 'same-buffer'
 let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>']
 let g:ycm_key_list_stop_completion = ['<C-y>']
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
-let g:ycm_key_invoke_completion = '<C-i>'
+let g:ycm_key_invoke_completion = '<c-b>'
 let g:ycm_show_diagnostics_ui = 1
-let g:ycm_max_diagnostics_to_display = 20
+let g:ycm_max_diagnostics_to_display = 50
 
-nnoremap <leader>yo :YcmCompleter GoTo<CR>
-nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>yt :YcmCompleter GetType<CR>
-nnoremap <leader>yi :YcmCompleter GoToInclude<CR>
-nnoremap <leader>ym :YcmCompleter GoToImprecise<CR>
-nnoremap <leader>yr :YcmCompleter GoToReferences<CR>
-nnoremap <leader>fx :YcmCompleter FixIt<CR>
+nmap <leader>gt :YcmCompleter GoTo<CR>
+nmap <leader>gT :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <leader>gp :YcmCompleter GetType<CR>
+nmap <leader>gi :YcmCompleter GoToInclude<CR>
+nmap <leader>yi :YcmCompleter GoToImprecise<CR>
+nmap <leader>yr :YcmCompleter GoToReferences<CR>
+nmap <leader>fx :YcmCompleter FixIt<CR>
 nnoremap <F9> :YcmDiags<CR>
 nnoremap <F10> :YcmForceCompileAndDiagnostics<CR>
 
@@ -191,6 +200,8 @@ let g:tagbar_autofocus = 1
 "autocmd vimenter * NERDTree
 map <F3> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * lcd %:p:h
+nnoremap <leader>nr :NERDTreeFind<cr>
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
@@ -217,11 +228,19 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 
 " airline
 let g:airline_theme='tomorrow'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
 highlight Pmenu ctermbg=cyan guibg=Grey
 hi Visual term=reverse cterm=reverse guibg=Grey
 hi Search guibg=peru guifg=wheat
 hi Search cterm=NONE ctermfg=grey ctermbg=blue
 map <silent> <F7> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
+" Fzf Vim
+let g:fzf_preview_window = 'right:50%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
 
 " vim-gitgutter
 set updatetime=100
@@ -306,3 +325,17 @@ if executable('pyls')
 endif
 
 autocmd FileType cpp setlocal keywordprg=cppman
+
+" Trigger configuration. You need to change this to something other than <tab>
+" if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+nnoremap <F12> :mksession
+map <Leader><Space> :noh<CR>
