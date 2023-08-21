@@ -44,15 +44,11 @@ alias starwars="telnet towel.blinkenlights.nl"
 alias nf="clear && neofetch"
 alias terminix="tilix"
 alias gpg=gpg2
-alias pass-superadmin="PASSWORD_STORE_DIR=~/.password-store-superadmin/ pass"
-alias pass-sysadmin="PASSWORD_STORE_DIR=~/.password-store-sysadmin/ pass"
-alias pass-web-developer="PASSWORD_STORE_DIR=~/.password-store/pass-web-developer/ pass"
-alias pass-accounts="PASSWORD_STORE_DIR=~/.password-store-accounts/ pass"
 
 # alias for RISC-V tool
-alias pk="/usr/riscv64-linux-gnu/bin/pk"
+# alias pk="/usr/riscv64-linux-gnu/bin/pk"
 
-alias volume="ncpamixer"
+# alias volume="ncpamixer"
 
 #tmux
 alias tmuxkillt="tmux kill-session -t"
@@ -67,10 +63,6 @@ alias tmuxrename="tmux rename-window -t"
 alias vep2conf="/local/masonarc/AndeSight/AndeSight/sid/ins/vep2conf"
 alias so="source"
 
-#Andes tools
-#(MIGHT NEED TO UPDATE)
-alias object_dump_for_sid="/home/users3/si/BSP-latest/nds64le-elf-mculib-v5f/bin/riscv64-elf-objdump"
-
 #Docker
 dockerkillcontainer() {
     docker stop $@ && docker rm $@
@@ -81,18 +73,6 @@ dockerkillcontainerbyimage() {
     docker ps -a -q  --filter ancestor=$image
     docker rm $(docker stop $(docker ps -a -q --filter ancestor=$image --format="{{.ID}}"))
 }
-
-dockerrun() {
-    docker run --name `whoami`-`(docker ps | grep -i "\`whoami\`" | wc -l)` --rm -it -v /NOBACKUP/atcarch02/share/host_tools/:/host_tools/ -v /NOBACKUP/atcarch02/share/COPILOT:/COPILOT/ -v /NOBACKUP/atcarch02/share/toolchains:/toolchains/ $@
-}
-
-#compile ace lib
-#/home/users/wuiw/host-tools/bin/g++ -DTTMATH_PLATFORM32 -DTTMATH_NOASM -std=c++17 -w -shared -I/home/users/wuiw/copilot/include/v5 -I/home/users/wuiw/copilot/include/ lib/libacescsim.cpp -o lib/libacescsim.so -m32 -fPIC -g3 -O0 -lboost_coroutine -lboost_context
-
-#cleanup_sysc_folder() {
-#    rm -v !("include"|"lib"|"src"|"systemc"|"target"|"tool") -rf
-#    rm -rf .clang* .git*
-#}
 
 dockerattach() {
     docker exec -u $1 -it $2 bash
